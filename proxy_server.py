@@ -11,6 +11,7 @@ def send_request(host, port, request):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
         client_socket.connect((host, port))
         client_socket.send(request)
+        # no more sending stuff
         client_socket.shutdown(socket.SHUT_WR)
         
         data = client_socket.recv(BYTES_TO_READ)
@@ -52,7 +53,7 @@ def start_threaded_server():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
         server_socket.bind((PROXY_SERVER_HOST, PROXY_SERVER_PORT))
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        server_socket.listen(2)
+        server_socket.listen(2)     # allow queing of 2 connections
         
         while True:
             conn, addr = server_socket.accept()

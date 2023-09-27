@@ -1,6 +1,5 @@
 
-1 - When using socket.socket(FAMILY, TYPE, ...), to specify a TCP connection, family should be set to socket.AF_INET or socket.AF_INET6 
-  - and type should be set to socket.SOCK_STREAM
+1 - When using socket.socket(FAMILY, TYPE, ...), to specify a TCP connection, TYPE should be set to socket.SOCK_STREAM. 
 2 - A server socket needs to bind host and port address together so a server socket will call bind(), not a client socket.
   - Server sockets also call listen() and accept(). Listen() allows the socket to listen to signals from the binded port and accept() allows 
   - connections to be accepted from the client. This does not need to be done in a client socket program

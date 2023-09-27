@@ -10,7 +10,8 @@ HOST = ""
 PORT = 8001
 BUFFER_SIZE = 1024
 
-def main():
+# single threaded version
+def start_server():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     
         #QUESTION 3
@@ -24,26 +25,21 @@ def main():
         #continuously listen for connections
         while True:
             conn, addr = s.accept()
-            print("Connected by", addr)
-            
             handle_connection(conn, addr)
-            # #recieve data, wait a bit, then send it back
-            # full_data = conn.recv(BUFFER_SIZE)
-            # time.sleep(0.5)
-            # print("Recieved: ", full_data)
-            # conn.sendall(full_data)
-            # conn.close()
+
 
 def handle_connection(conn, addr):
     #recieve data, wait a bit, then send it back
+    print("Connected by", addr)
     full_data = conn.recv(BUFFER_SIZE)
     time.sleep(0.5)
     print("Recieved: ", full_data)
     conn.sendall(full_data)
     conn.close()
     
+# multi threaded version
 def start_threaded_server():
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:    # init socket
         server_socket.bind((HOST, PORT))
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         server_socket.listen(2)
@@ -53,6 +49,6 @@ def start_threaded_server():
             thread = Thread(target=handle_connection, args=(conn, addr))
             thread.run()
             
-if __name__ == "__main__":
-    # main()
-    start_threaded_server()
+
+# start_server()
+start_threaded_server()
