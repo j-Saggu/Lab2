@@ -1,3 +1,5 @@
+# code taken from lab demo
+
 import socket
 
 BYTES_TO_READ = 4096
