@@ -1,0 +1,19 @@
+
+1 - When using socket.socket(FAMILY, TYPE, ...), to specify a TCP connection, family should be set to socket.AF_INET or socket.AF_INET6 
+  - and type should be set to socket.SOCK_STREAM
+2 - A server socket needs to bind host and port address together so a server socket will call bind(), not a client socket.
+  - Server sockets also call listen() and accept(). Listen() allows the socket to listen to signals from the binded port and accept() allows 
+  - connections to be accepted from the client. This does not need to be done in a client socket program
+3 - In the s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) call, the socket.SO_REUSEADDR tag tells the OS to let us reuse the same port
+4 - In the s.accept() call, we have two return values: conn, address
+      - conn is a new socket object used to send and recieve data on the connection
+      - address is the address bound to the socket (where the info is coming from)
+6 - recv(BUFFERSIZE) returns the data recieved from the socket. The amount of data is limited by the buffer size parameter
+7 - 
+sources:
+ - https://docs.python.org/3/library/socket.html
+ - https://steelkiwi.com/blog/working-tcp-sockets/
+ - https://www.digitalocean.com/community/tutorials/python-socket-programming-server-client 
+ - https://stackoverflow.com/questions/774571/server-vs-client-socket-low-level-details
+    - https://stackoverflow.com/a/788426
+ - https://stackoverflow.com/questions/4465959/python-errno-98-address-already-in-use 
